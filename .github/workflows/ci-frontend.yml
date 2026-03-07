@@ -2,9 +2,7 @@ name: CI Frontend Next.js
 
 on:
   push:
-    branches: [ main, master ]
-    paths:
-      - 'frontend/**' # Ne se déclenche que si on modifie le frontend
+    branches: [ main ]
 
 jobs:
   build-and-test:
