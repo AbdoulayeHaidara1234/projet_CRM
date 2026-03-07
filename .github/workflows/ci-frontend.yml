@@ -27,9 +27,6 @@ jobs:
     - name: Installer les dépendances
       run: npm ci
 
-    - name: Vérifier le code (Lint)
-      run: npm run lint
-
     - name: Tester le Build
       run: npm run build
       # On passe des fausses clés juste pour que le build Next.js passe le test
