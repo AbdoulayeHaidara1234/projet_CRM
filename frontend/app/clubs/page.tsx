@@ -23,6 +23,8 @@ export default function ClubsPage() {
   // 2. Fonction de création
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    console.log("L'URL API utilisée est :", process.env.NEXT_PUBLIC_API_URL);
     try {
       const response = await api.post('clubs/', formData);
       setClubs([response.data, ...clubs] as any);
