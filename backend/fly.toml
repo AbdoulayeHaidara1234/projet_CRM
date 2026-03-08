@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for projet-crm-2tz1fg on 2026-03-08T09:27:40Z
+# fly.toml app configuration file generated for projet-crm on 2026-03-08T10:02:43Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = 'projet-crm-2tz1fg'
-primary_region = 'fra'
+app = 'projet-crm'
+primary_region = 'iad'
 console_command = '/code/manage.py shell'
 
 [build]
@@ -16,7 +16,7 @@ console_command = '/code/manage.py shell'
   PORT = '8000'
 
 [http_service]
-  internal_port = 8080
+  internal_port = 8000
   force_https = true
   auto_stop_machines = 'stop'
   auto_start_machines = true
