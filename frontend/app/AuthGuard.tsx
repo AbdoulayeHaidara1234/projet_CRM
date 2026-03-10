@@ -50,7 +50,7 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     return <div className="h-screen flex items-center justify-center bg-gray-50 text-gray-500">Chargement sécurisé...</div>;
   }
 
-  // SI L'UTILISATEUR N'EST PAS CONNECTÉ : On affiche la page de Login
+  // Si l'utilisateur n'est pas connecté : On affiche la page de Login
   if (!session) {
     return (
       <div className="h-screen flex items-center justify-center bg-slate-900">
@@ -94,6 +94,6 @@ export default function AuthGuard({ children }: { children: React.ReactNode }) {
     );
   }
 
-  // SI CONNECTÉ : On laisse passer l'application (les enfants)
+  // Si connecté : On laisse passer l'application
   return <>{children}</>;
 }

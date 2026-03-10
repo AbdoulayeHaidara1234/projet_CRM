@@ -52,7 +52,7 @@ export default function TasksPage() {
     }
   };
 
-  // 4. NOUVEAU : Cocher/Décocher une tâche (Marquer comme terminée)
+  // 4. Cocher/Décocher une tâche (Marquer comme terminée)
   const handleToggleComplete = async (task: any) => {
     try {
       // On utilise PATCH car on ne modifie qu'un seul champ (est_terminee)

@@ -3,15 +3,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import AuthGuard from "./AuthGuard";
-import LogoutButton from "./LogoutButton"; // <--- On importe notre nouveau bouton
+import LogoutButton from "./LogoutButton"; 
 
 const inter = Inter({ subsets: ["latin"] });
 
+// Définition des métadonnées (ce qui s'affiche dans l'onglet du navigateur et sur Google)
 export const metadata: Metadata = {
   title: "CRM Basket",
   description: "Gestion des clubs et devis d'équipements",
 };
 
+// Composant Layout Principal : Il enveloppe absolument toutes les pages de l'application
+// "children" représente la page actuellement visitée (ex: Dashboard, Clubs, etc.)
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">

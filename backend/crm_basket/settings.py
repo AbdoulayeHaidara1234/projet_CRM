@@ -134,10 +134,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 6. Configuration CORS (Pour que Next.js puisse faire des requêtes)
+# Configuration CORS (Pour que Next.js puisse faire des requêtes)
 CORS_ALLOW_ALL_ORIGINS = True # En développement, on autorise tout
 
-# 7. Tes clés API tierces (Resend et Supabase)
+# Les clés API (Resend et Supabase)
 RESEND_API_KEY = os.environ.get('RESEND_API_KEY')
 SUPABASE_URL = os.environ.get('SUPABASE_URL')
 SUPABASE_SERVICE_KEY = os.environ.get('SUPABASE_SERVICE_KEY')

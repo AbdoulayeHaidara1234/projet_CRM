@@ -1,3 +1,4 @@
+// Composant exécuté côté navigateur (nécessaire pour utiliser les états interactifs)
 "use client";
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
@@ -13,12 +14,16 @@ export default function ClubsPage() {
     code_postal: ''
   });
 
+  // --- EFFETS DE BORD ---
+
   // 1. Charger les Clubs au démarrage
   useEffect(() => {
     api.get('clubs/').then(response => {
       setClubs(response.data);
     }).catch(error => console.error("Erreur API:", error));
   }, []);
+
+  // --- ACTIONS UTILISATEUR ---
 
   // 2. Fonction de création
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,7 +49,10 @@ export default function ClubsPage() {
     if (!window.confirm("Voulez-vous vraiment supprimer ce club ? Attention, l'opération sera bloquée s'il contient encore des contacts.")) return;
     
     try {
+      // Ordre de suppression envoyé au backend
       await api.delete(`clubs/${id}/`);
+      // Si l'API confirme la suppression, on retire visuellement le club de notre liste locale
+      // en filtrant tous les clubs dont l'ID est différent de celui qu'on vient de supprimer.
       setClubs(clubs.filter((club: any) => club.id !== id));
     } catch (error) {
       console.error("Erreur lors de la suppression:", error);
@@ -52,6 +60,7 @@ export default function ClubsPage() {
     }
   };
 
+  // --- RENDU VISUEL (JSX) ---
   return (
     <div className="p-10 relative">
       <div className="flex justify-between items-center mb-8">

@@ -4,17 +4,21 @@ import api from '@/lib/api';
 import Link from 'next/link';
 
 export default function DashboardPage() {
+  // --- ÉTATS (STATES) ---
   const [leads, setLeads] = useState([]);
   const [tasks, setTasks] = useState([]);
 
+// --- EFFETS DE BORD ---
   useEffect(() => {
     // On charge toutes les données nécessaires pour les statistiques
     api.get('leads/').then(response => setLeads(response.data)).catch(console.error);
     api.get('tasks/').then(response => setTasks(response.data)).catch(console.error);
   }, []);
 
-  // --- CALCUL DES STATISTIQUES ---
+  // --- CALCUL DES STATISTIQUES (KPIs) ---
+
   // 1. Chiffre d'Affaires (Leads Gagnés)
+  // On filtre les leads pour ne garder que le statut "GAGNE", puis on additionne leurs montants avec reduce()
   const caGagne = leads
     .filter((l: any) => l.statut === 'GAGNE')
     .reduce((somme, l: any) => somme + parseFloat(l.montant_estime), 0);
@@ -31,6 +35,7 @@ export default function DashboardPage() {
   const OBJECTIF = 10000;
   const progression = Math.min(100, Math.round((caGagne / OBJECTIF) * 100));
 
+  // --- RENDU VISUEL (JSX) ---
   return (
     <div className="p-10 bg-slate-50 min-h-screen relative">
       <h1 className="text-3xl font-bold text-gray-800 mb-2">Tableau de Bord</h1>

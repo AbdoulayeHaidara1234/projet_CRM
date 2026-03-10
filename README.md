@@ -51,7 +51,7 @@ Le projet repose sur une architecture moderne de type API "Headless", avec une s
 ![Texte alternatif](./docs/diag_UML.png)
 
 
-**Cas d'Utilisation :** Le système distingue les rôles "Commercial" (gestion des leads, tâches, etc.) et "Administrateur" (supervision du CA global, gestion des utilisateurs, configuration marketing).
+**Cas d'Utilisation :** Le système distingue le rôle "Commercial/Administrateur".
 
 
 

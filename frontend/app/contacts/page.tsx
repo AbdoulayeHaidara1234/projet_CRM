@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 
 export default function ContactsPage() {
+  // --- ÉTATS ---
   const [contacts, setContacts] = useState([]);
   const [clubs, setClubs] = useState([]);
   
-  // NOUVEAU : État pour la barre de recherche
+  // État pour la barre de recherche
   const [searchTerm, setSearchTerm] = useState('');
   
   const [showForm, setShowForm] = useState(false);
@@ -18,11 +19,14 @@ export default function ContactsPage() {
     club: ''
   });
 
+  // --- CHARGEMENT INITIAL ---
   useEffect(() => {
+    // Récupération simultanée des contacts et des clubs au chargement de la page
     api.get('contacts/').then(response => setContacts(response.data)).catch(console.error);
     api.get('clubs/').then(response => setClubs(response.data)).catch(console.error);
   }, []);
 
+  // --- LOGIQUE DE CRÉATION ---
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -33,6 +37,7 @@ export default function ContactsPage() {
       const response = await api.post('contacts/', dataToSend);
       setContacts([response.data, ...contacts] as any);
       setShowForm(false);
+      // Reset du formulaire
       setFormData({ prenom: '', nom: '', email: '', role_club: '', club: '' });
     } catch (error) {
       console.error("Erreur création:", error);
@@ -40,6 +45,7 @@ export default function ContactsPage() {
     }
   };
 
+  // --- LOGIQUE DE SUPPRESSION ---
   const handleDelete = async (id: number) => {
     if (!window.confirm("Voulez-vous vraiment supprimer ce contact ?")) return;
     try {
@@ -51,6 +57,7 @@ export default function ContactsPage() {
     }
   };
 
+  // --- LOGIQUE D'ENVOI D'EMAIL (INTÉGRATION RESEND) ---
   const handleSendEmail = async (email: string, prenom: string) => {
     if (!window.confirm(`Voulez-vous envoyer le catalogue à ${email} ?`)) return;
     try {
@@ -62,14 +69,16 @@ export default function ContactsPage() {
     }
   };
 
+  // --- UTILITAIRE : RÉCUPÉRER LE NOM DU CLUB ---
+  // Comme les contacts stockent l'ID du club, cette fonction retrouve le nom lisible dans la liste des clubs
   const getClubName = (clubId: number | null) => {
     if (!clubId) return <span className="text-gray-400 italic">Indépendant</span>;
     const club: any = clubs.find((c: any) => c.id === clubId);
     return club ? club.nom_club : "Inconnu";
   };
 
-  // NOUVEAU : Filtrage dynamique des contacts
-  // Cette liste se met à jour à chaque lettre tapée dans la barre de recherche !
+  // --- FILTRAGE DYNAMIQUE (RECHERCHE) ---
+  // Cette liste se met à jour à chaque lettre tapée dans la barre de recherche
   const filteredContacts = contacts.filter((contact: any) => {
     const searchLower = searchTerm.toLowerCase();
     return (

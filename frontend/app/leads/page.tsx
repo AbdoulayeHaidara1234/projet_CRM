@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 
 export default function LeadsPage() {
+  // --- ÉTATS ---
   const [leads, setLeads] = useState([]);
   const [contacts, setContacts] = useState([]);
   
@@ -14,6 +15,7 @@ export default function LeadsPage() {
     contact: ''
   });
 
+  // --- CONFIGURATION DU PIPELINE ---
   // Les 4 étapes de notre Pipeline
   const COLONNES = [
     { id: 'NOUVEAU', titre: 'Nouvelles opportunités', couleur: 'border-blue-500', bg: 'bg-blue-50' },
@@ -22,11 +24,14 @@ export default function LeadsPage() {
     { id: 'PERDU', titre: 'Perdu', couleur: 'border-red-500', bg: 'bg-red-50' },
   ];
 
+  // --- CHARGEMENT DES DONNÉES ---
   useEffect(() => {
     api.get('leads/').then(response => setLeads(response.data)).catch(console.error);
     api.get('contacts/').then(response => setContacts(response.data)).catch(console.error);
   }, []);
 
+  // --- ACTIONS ---
+  // 1. Création d'un nouveau devis
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -44,6 +49,7 @@ export default function LeadsPage() {
     }
   };
 
+  // 2. Suppression d'un devis
   const handleDelete = async (id: number) => {
     if (!window.confirm("Supprimer ce devis ?")) return;
     try {
@@ -54,7 +60,8 @@ export default function LeadsPage() {
     }
   };
 
-  // NOUVELLE FONCTION : Changer de colonne (Mise à jour du statut)
+  // 3. Changer de colonne (Mise à jour du statut)
+  // Cette fonction permet de déplacer une carte d'une colonne à une autre
   const handleStatusChange = async (id: number, nouveauStatut: string) => {
     try {
       // On utilise PATCH pour ne modifier QUE le statut dans la base de données
@@ -67,6 +74,7 @@ export default function LeadsPage() {
     }
   };
 
+  // Utilitaires pour l'affichage
   const getContactName = (contactId: number | null) => {
     if (!contactId) return "Aucun contact";
     const contact: any = contacts.find((c: any) => c.id === contactId);
